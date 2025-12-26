@@ -137,3 +137,60 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS / Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+Browse.VC.db
+*.opendb
+*.cache
+*.vsidxㄴ
+*.slnx
+*.VC.VC.opendb
+
+# Visual Studio build outputs
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+**/bin/
+**/obj/
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# C/C++ build artifacts
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.ilk
+*.pdb
+*.idb
+*.ipdb
+*.iobj
+*.tlog
+*.log
+*.pch
+*.exp
+*.map
+
+# Node
+node_modules/
+dist/
+build/
+.coverage/
+.env
