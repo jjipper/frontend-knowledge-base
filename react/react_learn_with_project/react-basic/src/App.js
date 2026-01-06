@@ -1,17 +1,26 @@
-import { Fragment } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import routes from "./routes";
 
 function App() {
-  const number = 1;
-
-  const double = (number) => {
-    return number * 2;
-  };
-
   return (
-    <Fragment>
-      <div>{double(number)}</div>
-      <button>Submit</button>
-    </Fragment>
+    <Router>
+      <NavBar />
+      <div className="container">
+        <Switch>
+          {routes.map((route) => {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+                exact
+              />
+            );
+          })}
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
