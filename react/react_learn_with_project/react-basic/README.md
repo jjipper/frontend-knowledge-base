@@ -72,3 +72,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### 설치 파일
 
 npm i json-server@0.17.0
+# json-server --watch db.json --port 3001
+## npm run db
+npm i react-router-dom@5
+npm i axios
+npm i prop-types
