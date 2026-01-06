@@ -10,17 +10,24 @@ const ListPage = () => {
 
   const getPosts = () => {
     axios.get("http://localhost:3001/posts").then((res) => {
-      setPosts(res.data)
-    })
-  }
-  
+      setPosts(res.data);
+    });
+  };
+
+  const deleteBlog = (e, id) => {
+    e.stopPropagation();
+    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    });
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
-  
+
   return (
     <div>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between mb-2">
         <h1>Blogs</h1>
         <div>
           <Link to="/blogs/create" className="btn btn-success">
@@ -28,20 +35,30 @@ const ListPage = () => {
           </Link>
         </div>
       </div>
-      {
-        posts.map((post) => {
-          return (
-            <Card
-              key={post.id}
-              title={post.title}
-              onClick={() => { history.push('/blogs/edit') }}
-            >
-            </Card>
-          )
-        })
-      }
+      {posts.length > 0
+        ? posts.map((post) => {
+            return (
+              <Card
+                key={post.id}
+                title={post.title}
+                onClick={() => {
+                  history.push("/blogs/edit");
+                }}
+              >
+                <div>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={(e) => deleteBlog(e, post.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </Card>
+            );
+          })
+        : "No blog post found"}
     </div>
-  )
-}
+  );
+};
 
 export default ListPage;
