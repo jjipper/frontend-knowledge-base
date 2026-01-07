@@ -7,5 +7,11 @@
     "source.fixAll.eslint": false
   },
 
-  "eslint.format.enable": false
+  "eslint.format.enable": false,
+
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false
+  }
 }
