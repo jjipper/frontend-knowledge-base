@@ -1,16 +1,19 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import Card from '../components/card';
+import Card from '../components/Card';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
 const ListPage = () => {
   const history = useHistory();
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getPosts = () => {
     axios.get('http://localhost:3001/posts').then((res) => {
       setPosts(res.data);
+      setLoading(false);
     });
   };
 
@@ -25,6 +28,37 @@ const ListPage = () => {
     getPosts();
   }, []);
 
+  const renderBlogList = () => {
+    if (loading) {
+      return <LoadingSpinner />;
+    }
+
+    if (posts.length === 0) {
+      return <div>No blog post found</div>;
+    }
+
+    return posts.map((post) => {
+      return (
+        <Card
+          key={post.id}
+          title={post.title}
+          onClick={() => {
+            history.push(`/blogs/${post.id}`);
+          }}
+        >
+          <div>
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={(e) => deleteBlog(e, post.id)}
+            >
+              Delete
+            </button>
+          </div>
+        </Card>
+      );
+    });
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between mb-2">
@@ -35,28 +69,7 @@ const ListPage = () => {
           </Link>
         </div>
       </div>
-      {posts.length > 0
-        ? posts.map((post) => {
-            return (
-              <Card
-                key={post.id}
-                title={post.title}
-                onClick={() => {
-            history.push('/blogs/edit');
-                }}
-              >
-                <div>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={(e) => deleteBlog(e, post.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </Card>
-            );
-          })
-        : "No blog post found"}
+      {renderBlogList()}
     </div>
   );
 };
