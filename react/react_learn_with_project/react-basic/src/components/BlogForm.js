@@ -8,16 +8,49 @@ const BlogForm = ({ editing = false }) => {
   const { id } = useParams();
 
   const [title, setTitle] = useState('');
+  const [originalTitle, setOriginalTitle] = useState('');
   const [body, setBody] = useState('');
+  const [originalBody, setOriginalBody] = useState('');
 
   useEffect(() => {
+    if (editing) {
     axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
       setTitle(res.data.title);
+        setOriginalTitle(res.data.title);
       setBody(res.data.body);
+        setOriginalBody(res.data.body);
     });
-  }, [id]);
+    }
+  }, [id, editing]);
+
+  const idEdited = () => {
+    return (
+      title !== originalTitle ||
+      body !== originalBody ||
+      publish !== originalPublish
+    );
+  };
+
+  const goBack = () => {
+    if (editing) {
+      history.push(`/blogs/${id}`);
+    } else {
+      history.push('/blogs');
+    }
+  };
 
   const onSubmit = () => {
+    if (editing) {
+      axios
+        .patch(`http://localhost:3001/posts/${id}`, {
+          title,
+          body,
+          publish,
+        })
+        .then((res) => {
+          history.push(`/blogs/${id}`);
+        });
+    } else {
     axios
       .post('http://localhost:3001/posts', {
         title,
@@ -27,6 +60,7 @@ const BlogForm = ({ editing = false }) => {
       .then(() => {
         history.push('/blogs');
       });
+    }
   };
 
   return (
@@ -53,8 +87,15 @@ const BlogForm = ({ editing = false }) => {
           className="form-control"
         />
       </div>
-      <button onClick={onSubmit} className="btn btn-primary">
+      <button
+        onClick={onSubmit}
+        className="btn btn-primary"
+        disabled={editing && !idEdited()}
+      >
         {editing ? 'Edit' : 'Post'}
+      </button>
+      <button className="btn btn-danger ms-2" onClick={goBack}>
+        Cancel
       </button>
     </div>
   );
