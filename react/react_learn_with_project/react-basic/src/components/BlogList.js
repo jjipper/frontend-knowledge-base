@@ -17,6 +17,7 @@ const BlogList = ({ isAdmin = false }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [searchText, setSearchText] = useState('');
   const limit = 5;
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const BlogList = ({ isAdmin = false }) => {
 
   const onClickPageButton = (page) => {
     history.push(`${location.pathname}?page=${page}`);
+    setCurrentPage(page);
     getPosts(page);
   };
 
@@ -35,6 +37,7 @@ const BlogList = ({ isAdmin = false }) => {
         _limit: limit,
         _sort: 'id',
         _order: 'desc',
+        title_like: searchText,
       };
 
       if (!isAdmin) {
@@ -47,16 +50,17 @@ const BlogList = ({ isAdmin = false }) => {
         setLoading(false);
       });
     },
-    [isAdmin],
+    [isAdmin, searchText],
   );
 
   useEffect(() => {
     setCurrentPage(parseInt(pageParam) || 1);
     getPosts(parseInt(pageParam) || 1);
-  }, [pageParam, getPosts]);
+  }, []);
 
   const deleteBlog = (e, id) => {
     e.stopPropagation();
+
     axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
@@ -91,8 +95,26 @@ const BlogList = ({ isAdmin = false }) => {
     });
   };
 
+  const onSearch = (e) => {
+    if (e.key === 'Enter') {
+      history.push(`${location.pathname}?page=1`);
+      setCurrentPage(1);
+      getPosts(1);
+    }
+  };
+
   return (
     <div>
+      <input
+        type="text"
+        value={searchText}
+        className="form-control"
+        placeholder="Search.."
+        onChange={(e) => {
+          setSearchText(e.target.value);
+        }}
+        onKeyUp={onSearch}
+      />
       <hr />
       {posts.length === 0 ? (
         <div>No blog post found</div>
