@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router';
-import { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const BlogForm = ({ editing = false }) => {
   const history = useHistory();
@@ -39,7 +39,7 @@ const BlogForm = ({ editing = false }) => {
     if (editing) {
       history.push(`/blogs/${id}`);
     } else {
-      history.push('/blogs');
+      history.push('/admin');
     }
   };
 
@@ -63,7 +63,7 @@ const BlogForm = ({ editing = false }) => {
           createdAt: Date.now(),
         })
         .then(() => {
-          history.push('/blogs');
+          history.push('/admin');
         });
     }
   };
@@ -120,7 +120,7 @@ const BlogForm = ({ editing = false }) => {
 };
 
 BlogForm.propTypes = {
-  editing: bool,
+  editing: PropTypes.bool,
 };
 
 export default BlogForm;
