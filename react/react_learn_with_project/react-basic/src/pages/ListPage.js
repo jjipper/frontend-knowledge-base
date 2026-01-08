@@ -37,26 +37,30 @@ const ListPage = () => {
       return <div>No blog post found</div>;
     }
 
-    return posts.map((post) => {
-      return (
-        <Card
-          key={post.id}
-          title={post.title}
-          onClick={() => {
-            history.push(`/blogs/${post.id}`);
-          }}
-        >
-          <div>
-            <button
-              className="btn btn-sm btn-danger"
-              onClick={(e) => deleteBlog(e, post.id)}
-            >
-              Delete
-            </button>
-          </div>
-        </Card>
-      );
-    });
+    return posts
+      .filter((post) => {
+        return post.publish;
+      })
+      .map((post) => {
+        return (
+          <Card
+            key={post.id}
+            title={post.title}
+            onClick={() => {
+              history.push(`/blogs/${post.id}`);
+            }}
+          >
+            <div>
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={(e) => deleteBlog(e, post.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </Card>
+        );
+      });
   };
 
   return (

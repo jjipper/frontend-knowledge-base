@@ -11,15 +11,19 @@ const BlogForm = ({ editing = false }) => {
   const [originalTitle, setOriginalTitle] = useState('');
   const [body, setBody] = useState('');
   const [originalBody, setOriginalBody] = useState('');
+  const [publish, setPublish] = useState(false);
+  const [originalPublish, setOriginalPublish] = useState(false);
 
   useEffect(() => {
     if (editing) {
-    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
-      setTitle(res.data.title);
+      axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+        setTitle(res.data.title);
         setOriginalTitle(res.data.title);
-      setBody(res.data.body);
+        setBody(res.data.body);
         setOriginalBody(res.data.body);
-    });
+        setPublish(res.data.publish);
+        setOriginalPublish(res.data.publish);
+      });
     }
   }, [id, editing]);
 
@@ -51,16 +55,21 @@ const BlogForm = ({ editing = false }) => {
           history.push(`/blogs/${id}`);
         });
     } else {
-    axios
-      .post('http://localhost:3001/posts', {
-        title,
-        body,
-        createdAt: Date.now(),
-      })
-      .then(() => {
-        history.push('/blogs');
-      });
+      axios
+        .post('http://localhost:3001/posts', {
+          title,
+          body,
+          publish,
+          createdAt: Date.now(),
+        })
+        .then(() => {
+          history.push('/blogs');
+        });
     }
+  };
+
+  const onChangePublish = (e) => {
+    setPublish(e.target.checked);
   };
 
   return (
@@ -86,6 +95,15 @@ const BlogForm = ({ editing = false }) => {
           rows={10}
           className="form-control"
         />
+      </div>
+      <div className="form-check mb-4">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          checked={publish}
+          onChange={onChangePublish}
+        />
+        <label className="form-check-label">Publish</label>
       </div>
       <button
         onClick={onSubmit}
