@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-import Card from '../components/Card';
-import LoadingSpinner from '../components/LoadingSpinner';
+import Card from './Card';
+import LoadingSpinner from './LoadingSpinner';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import Pagination from './Pagintation';
