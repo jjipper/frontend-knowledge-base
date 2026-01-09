@@ -5,25 +5,23 @@ import LoadingSpinner from './LoadingSpinner';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import Pagination from './Pagintation';
-import Toast from './Toast';
 import { useLocation } from 'react-router-dom';
 import useToast from '../hooks/toast';
 
 const BlogList = ({ isAdmin = false }) => {
-  const limit = 5;
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageParam = params.get('page');
-
-  const [toasts, addToast, deleteToast] = useToast();
-
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState('');
+
+  const { addToast } = useToast();
+  const limit = 5;
 
   useEffect(() => {
     setNumberOfPages(Math.ceil(numberOfPosts / limit));
@@ -114,7 +112,6 @@ const BlogList = ({ isAdmin = false }) => {
 
   return (
     <div>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
       <input
         type="text"
         value={searchText}
