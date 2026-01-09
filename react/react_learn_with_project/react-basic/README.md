@@ -77,3 +77,4 @@ npm i json-server@0.17.0
 npm i react-router-dom@5
 npm i axios
 npm i prop-types
+npm i uuid
