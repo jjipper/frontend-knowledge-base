@@ -13,6 +13,8 @@ const BlogForm = ({ editing = false }) => {
   const [originalBody, setOriginalBody] = useState('');
   const [publish, setPublish] = useState(false);
   const [originalPublish, setOriginalPublish] = useState(false);
+  const [titleError, setTitleError] = useState(false);
+  const [bodyError, setBodyError] = useState(false);
 
   useEffect(() => {
     if (editing) {
@@ -43,28 +45,49 @@ const BlogForm = ({ editing = false }) => {
     }
   };
 
+  const validateForm = () => {
+    let validated = true;
+
+    if (title === '') {
+      setTitleError(true);
+      validated = false;
+    }
+
+    if (body === '') {
+      setBodyError(true);
+      validated = false;
+    }
+
+    return validated;
+  };
+
   const onSubmit = () => {
-    if (editing) {
-      axios
-        .patch(`http://localhost:3001/posts/${id}`, {
-          title,
-          body,
-          publish,
-        })
-        .then((res) => {
-          history.push(`/blogs/${id}`);
-        });
-    } else {
-      axios
-        .post('http://localhost:3001/posts', {
-          title,
-          body,
-          publish,
-          createdAt: Date.now(),
-        })
-        .then(() => {
-          history.push('/admin');
-        });
+    setTitleError(false);
+    setBodyError(false);
+
+    if (validateForm()) {
+      if (editing) {
+        axios
+          .patch(`http://localhost:3001/posts/${id}`, {
+            title,
+            body,
+            publish,
+          })
+          .then((res) => {
+            history.push(`/blogs/${id}`);
+          });
+      } else {
+        axios
+          .post('http://localhost:3001/posts', {
+            title,
+            body,
+            publish,
+            createdAt: Date.now(),
+          })
+          .then(() => {
+            history.push('/admin');
+          });
+      }
     }
   };
 
@@ -82,8 +105,9 @@ const BlogForm = ({ editing = false }) => {
           onChange={(event) => {
             setTitle(event.target.value);
           }}
-          className="form-control"
+          className={`form-control ${titleError ? 'border-danger' : ''}`}
         />
+        {titleError && <div className="text-danger">Title is required.</div>}
       </div>
       <div className="mb-3">
         <label className="form-label">Body</label>
@@ -93,8 +117,9 @@ const BlogForm = ({ editing = false }) => {
             setBody(event.target.value);
           }}
           rows={10}
-          className="form-control"
+          className={`form-control ${bodyError ? 'border-danger' : ''}`}
         />
+        {bodyError && <div className="text-danger">Body is required.</div>}
       </div>
       <div className="form-check mb-4">
         <input
