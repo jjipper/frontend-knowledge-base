@@ -78,3 +78,4 @@ npm i react-router-dom@5
 npm i axios
 npm i prop-types
 npm i uuid
+npm install @reduxjs/toolkit react-redux
