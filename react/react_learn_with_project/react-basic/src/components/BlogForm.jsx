@@ -2,14 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
-import Toast from './Toast';
-import useToast from '../hooks/toast';
 
-const BlogForm = ({ editing = false }) => {
+const BlogForm = ({ editing = false, addToast }) => {
   const history = useHistory();
   const { id } = useParams();
-
-  const [toasts, addToast, deleteToast] = useToast();
 
   const [title, setTitle] = useState('');
   const [originalTitle, setOriginalTitle] = useState('');
@@ -93,7 +89,7 @@ const BlogForm = ({ editing = false }) => {
               type: 'success',
               text: 'Successfully created',
             });
-            // history.push('/admin');
+            history.push('/admin');
           });
       }
     }
@@ -105,7 +101,6 @@ const BlogForm = ({ editing = false }) => {
 
   return (
     <div>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
       <h1>{editing ? 'Edit' : 'Create'} a blog post</h1>
       <div className="mb-3">
         <label className="form-label">Title</label>
