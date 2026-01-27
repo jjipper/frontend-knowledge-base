@@ -1,5 +1,6 @@
 # frontend-knowledge-base
-삐약 개발자의 프론트엔드 지식 수집소 🐣📘
+삐약 개발자의 프론트엔드 지식 수집소 🐣📘 
+
 JS · React · CS 실험과 기록을 모아두는 공간입니다.
 
 프론트엔드 개발자로 성장하기 위해 학습한 내용을 **주제별로 구조화**하여 정리하는 공간입니다.  
@@ -23,24 +24,26 @@ JS · React · CS 실험과 기록을 모아두는 공간입니다.
 ---
 
 ## 🗂️ Repository Structure (예정)
+```
 frontend-knowledge-base
 ├── javascript
-│ ├── scope-and-closure
-│ ├── event-loop
-│ ├── async
-│ └── prototype
+│   ├── scope-and-closure
+│   ├── event-loop
+│   ├── async
+│   └── prototype
 ├── react
-│ ├── rendering-model
-│ ├── reconciliation
-│ ├── fiber
-│ └── hooks-internals
+│   ├── rendering-model
+│   ├── reconciliation
+│   ├── fiber
+│   └── hooks-internals
 ├── cs-basics
-│ ├── c-language
-│ └── computer-architecture
+│   ├── c-language
+│   └── computer-architecture
 ├── reading
-│ ├── inner-game
-│ └── agile
+│   ├── inner-game
+│   └── agile
 └── README.md
+```
 
 각 폴더는 다음을 포함합니다:
 - `notes.md` — 개념 정리, 오해했던 부분, 배운 점  
