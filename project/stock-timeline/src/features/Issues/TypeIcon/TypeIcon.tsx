@@ -12,7 +12,7 @@ interface TypeIconProps {
   fontSize?: number;
 }
 
-const IconType = {
+const IconType: Record<TypeIconProps['type'], React.ElementType> = {
   memory: MemoryIcon,
   battery: BatterySaverIcon,
   ai: AutoAwesomeIcon,
@@ -21,6 +21,7 @@ const IconType = {
 };
 
 const TypeIcon = ({ type, fontSize = 28 }: TypeIconProps) => {
+  // 👍 아이콘 매핑(히트맵). -> 팩토리 패턴 이라고 많이 함.
   const IconComponent = IconType[type];
 
   return (

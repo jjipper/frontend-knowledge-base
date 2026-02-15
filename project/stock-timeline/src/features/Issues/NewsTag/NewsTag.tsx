@@ -12,6 +12,8 @@ const NewsTag = ({ newsCount, mention }: NewsTagProps) => {
       <TrendingUpIcon sx={{ fontSize: 12 }} />
       <span className="tag-text">
         {newsCount} related news items
+        {/* NOTE: 대부분의 마크업 작업에서 순수 "스트링"만 존재하는 경우는 없는게 좋다. */}
+        {/* div 든 span 이든 태그를 감싸는 것이 정석 */}
         {mention && ', surge in mentions'}
       </span>
     </Tag>

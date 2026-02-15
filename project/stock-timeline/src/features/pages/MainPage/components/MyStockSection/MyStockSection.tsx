@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
-import { SectionWrapper } from 'features/shared/layout/SectionWrapper/SectionWrapper';
-import { SectionHeader } from 'features/shared/layout/SectionHeader/SectionHeader';
+import { SectionWrapper } from 'features/layout/SectionWrapper/SectionWrapper';
+import { SectionHeader } from 'features/layout/SectionHeader/SectionHeader';
 import { StockList } from 'features/Stocks/StockList/StockList';
 import { StockCard } from 'features/Stocks/StockCard/StockCard';
 

@@ -14,12 +14,13 @@ export const StockCard = ({
   percentage,
 }: StockCardProps) => {
   const navigate = useNavigate();
-  function goToStockDetail() {
+  // NOTE: 함수는 handle~ 로 시작해야 한다. 왜냐며는 이벤트를 "핸들링" 하기 때문
+  const handleCardClick = () => {
     navigate('/stock');
-  }
+  };
 
   return (
-    <Card onClick={goToStockDetail}>
+    <Card onClick={handleCardClick}>
       <dl className="stock-info">
         <dt>
           <span className="name">{name}</span>
